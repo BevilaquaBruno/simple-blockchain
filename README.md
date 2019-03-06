@@ -1,4 +1,4 @@
-# Simple Blochchain
+# Simple Blockchain
 
 #### to change the diffuculty, alter the `difficulty` variable inside `constructor` method in blockchain.js
 
