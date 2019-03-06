@@ -1,30 +1,26 @@
 const sha256 = require('crypto-js/sha256')
-const { DIFFICULTY, MINE_RATE } = require('./config')
 
 class Block {
-	constructor(index = 0, lastBlock = null, data = 'My Genesis block') {
+	constructor(index = 0, previousHash = null, data = 'My Genesis block', difficulty = 1) {
 		//index for the transaction
 		this.index = index
-		//the last block
-		this.lastBlock = lastBlock
+		//the hash of the previous transaction
+		this.previousHash = previousHash
 		//the data of this transaction
 		this.data = data
 		//the timestamp of this transaction
-		this.timestamp = Date.now()
+		this.timestamp = new Date()
 		//the difficulty - to be more difficulty to create a node
-		this.difficulty = DIFFICULTY
+		this.difficulty = difficulty
 		//the nonce
 		this.nonce = 0
-		//mine rate
-		this.mine_rate = MINE_RATE
-		//mine
+
 		this.mine()
 	}
 
 	generateHash() {
 		//genereate the hash with the data in the constructor
-		const hash = (this.lastBlock == null)? null : this.lastBlock.actualHash
-		return sha256(this.index + hash + JSON.stringify(this.data) + this.timestamp + this.nonce).toString()
+		return sha256(this.index + this.previousHash + JSON.stringify(this.data) + this.timestamp + this.nonce).toString()
 	}
 
 	mine() {
@@ -32,20 +28,8 @@ class Block {
 		this.actualHash = this.generateHash()
 		//mine to find a valid hash with the 0's before
 		while (!(/^0*$/.test(this.actualHash.substring(0, this.difficulty)))) {
-			this.nonce++
-			this.difficulty = this.updateDifficulty(Date.now())
-			this.actualHash = this.generateHash()
-		}
-	}
-
-	updateDifficulty(nowTime){
-		const difficulty = (this.lastBlock == null) ? DIFFICULTY : this.lastBlock.difficulty
-		const lastBlockTimestamp = (this.lastBlock == null) ? null : this.lastBlock.timestamp
-		const hard = lastBlockTimestamp + this.mine_rate > nowTime
-		if (hard) {
-			 return difficulty + 1
-		}else{
-			return difficulty - 1
+				this.nonce++
+				this.actualHash = this.generateHash()
 		}
 	}
 }
