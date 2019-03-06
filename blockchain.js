@@ -1,10 +1,9 @@
 const Block = require('./block')
 
 class Blockchain {
-	constructor(difficulty = 1) {
+	constructor() {
 		this.blocks = [new Block()]
 		this.index = 1
-		this.difficulty = difficulty
 	}
 
 	getLastBlock() {
@@ -15,10 +14,10 @@ class Blockchain {
 		//uncomment this if/else to only add a new block if the blockchain is valid
 		/*if(this.isValid()){*/
 			const index = this.index
-			const difficulty = this.difficulty
-			const previousHash = this.getLastBlock().actualHash
 
-			const block = new Block(index, previousHash, data, difficulty)
+			const lastBlock = this.getLastBlock()
+
+			const block = new Block(index, lastBlock, data)
 
 			this.index++
 			this.blocks.push(block)
