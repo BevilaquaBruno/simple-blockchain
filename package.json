@@ -1,0 +1,14 @@
+{
+  "name": "simple-blockchain",
+  "version": "1.0.0",
+  "description": "A simple blockchain",
+  "main": "example.js",
+  "scripts": {
+    "example": "node example.js"
+  },
+  "author": "Bruno Bevilaqua",
+  "license": "ISC",
+  "dependencies": {
+    "crypto-js": "^3.1.9-1"
+  }
+}
