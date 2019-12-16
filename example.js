@@ -3,7 +3,10 @@ const Blockchain = require('./blockchain')
 const blockchain = new Blockchain()
 blockchain.addBlock({ amount: 4 })
 blockchain.addBlock({ amount: 50 })
-blockchain.addBlock({ amount: 51, test: 1 })
+for (let index = 0; index < 100; index++) {
+    blockchain.addBlock({ amount: index, test: 'Test'+index });
+}
+
 
 console.log(blockchain)
 
